@@ -13,7 +13,7 @@ else
     #Amazon Linux 1
     yum install -y httpd24 php70 mysql56-server php70-mysqlnd
 fi 
-
+ 
 groupadd www
 usermod -a -G www ec2-user 
 
