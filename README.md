@@ -23,6 +23,25 @@
    
    **BURSTABLE CLASSES:** Whereas burstable classes provides baseline level of CPU performance with ability to burst above baseline.
    
+   While you are creating DB, make sure you choose replica of your DB in differentt AZ for **Multi-AZ Deployment** to achieve **HA.**
+   Another must have feature when RDS being created is that **Enabling Encryption.** This feature will allow us to secure our data **in Rest.** 
+   Lastly, it is strongly recommended to have **Deletion Protection** as well. Then we will prevent our DB from accidental deletion. 
+   
+   After creating our DB, we will see two DBs under Databases dashboard. By default, two DBs are created because we chose multiple AZs. One is master (writer instance) other one is standby (reader instance). 
+   
+   Then go to Key Management Service **(KMS)** and get KMS key. 
+   
+   Next, we need to connect to DB, so we can use **MySQL Client.** 
+   
+   Now, lets spin up one more instance for MySQL Client in same region because KMS as well as PEM files are regional products we can leverage.
+   
+   After spinning up your instance, download MySQL client for EC2. 
+   
+   Then if we have existing Security Group (SG) add one more inbound rule to your SG. Otherwise, create one and add one more port no to your inbound rule.
+   For MySQL DB default port no is **3306.**
+   
+   
+   
    
    
    
