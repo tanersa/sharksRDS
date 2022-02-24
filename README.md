@@ -51,6 +51,11 @@
    
    In order to put our DB in Private Subnet, we need to create **Subnet Group** from Private Subnets only. Whenever we spin up our DB, it picks up **Private Subnet by default.**
 
+   Overall, when we have managed DB, we just choose our **instance type**, our **subnet group** and **KMS key** then rest is taken care by AWS.
+   
+   No matter what, we need to back up our DB, so we can do that by having **Snapshot**. 
+   
+   -  To create a snapshot, just go to your DB you created on AWS Console then choose your DB instance (writer or reader) and click on Actions then choose "take        snapshot" option and do the steps accordingly. You can even restore your snapshots if you go back to snapshots and choose "existing snapshot" then click on            Actions.
 
 
   
