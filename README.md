@@ -99,13 +99,21 @@
    -  Log Events: Audit Logs, General Logs, Error Logs, and Slowquery Logs.
    -  Hit **"Restore DB instance"**
    
-   Now, we succesfully created our RDS DB instance.
+      Now, we succesfully created our RDS DB instance.
    
-   If you would like to verify, go to your security groups and check if its created. It should give us Private IP since its private. 
+      If you would like to verify, go to your security groups and check if its created. It should give us Private IP since its private. 
    
    -  Create security group for your **Bastion Host**  instance.  
    -  Create security group for your Application Load Balancer (**ALB**).  
-   -  
+   -  Create WebServer Security Group
+   -  Create DB instance Security Group
+   -  If you did not choose DB instance Security Group while creating your RDS then modify your security group.
+
+      Continue and Apply Immediately.
+      
+      Verify your DBs are up and running. It would take some time for that.
+      
+   -  Configure Auto Scaling Group **(ASG)** and Launch Configuration **(LC)** for **Private Subnets**.    
 
    
       
