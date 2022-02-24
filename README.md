@@ -40,6 +40,21 @@
    Then if we have existing Security Group (SG) add one more inbound rule to your SG. Otherwise, create one and add one more port no to your inbound rule.
    For MySQL DB default port no is **3306.**
    
+   After installing MySQL successfully, we can look at databases existing or we can create one. 
+   
+   -  show databases
+   -  use sharks
+   -  CREATE DATABASE myDB
+   -  insert into myDB
+
+   **_Important Note:_** Whenever we create a DB, we have to put it in **Private Subnet** because DBs are always must be private.
+   
+   In order to put our DB in Private Subnet, we need to create **Subnet Group** from Private Subnets only. Whenever we spin up our DB, it picks up **Private Subnet by default.**
+
+
+
+  
+   
    
    
    
