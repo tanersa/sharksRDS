@@ -180,7 +180,8 @@
       
             isl2=$(uname -a | grep amzn2)
 
-      Then, place a condition where our script will pick up the correct amazon linux php packages to install.
+      Then, place a condition where our script will pick up the correct install packages. If its Amazon Linux install mariadb server. Otherwise, install mysql 
+      install packages.
 
             if [ "$isl2" != "" ] ; then 
                 #Amazon Linux 2
@@ -193,6 +194,48 @@
       
       **_Note:_** Good thing about shell scripting is that you can integrate with **Python** and all **other programming languages**. Therefore, integration is 
       so great!
+      
+      We create a new user group called **"www"** and we add **ec2-user** to **"www"** group.
+            
+            groupadd www
+            usermod -a -G www ec2-user 
+          
+          
+      Download wordpress site & move to /var/www/html
+      
+            cd /var/www 
+            curl -O https://wordpress.org/latest.tar.gz && tar -zxf latest.tar.gz 
+            rm -rf /var/www/html 
+            mv wordpress /var/www/html      
+      
+      
+      Set the persmissions for read, write, execute (2775)
+      
+            chown -R root:apache /var/www 
+            chmod 2775 /var/www 
+            find /var/www -type d -exec chmod 2775 {} +
+            find /var/www -type d -exec chmod 0664 {} +
+            
+      Print info using phpinfo, then start apache service and run service even during boot time.
+      
+            echo '<?php phpinfo(); ?>' > /var/www/html/phpinfo.php 
+            service httpd start 
+            chkconfig httpd on 
+            
+      We are using our end to end solution.
+      
+      Now, we  start mariadb or mysql server based on Amazon Linux 1 or Amazon Linux 2 and do it even during boot time.
+      Lastly, close the shell script with keyword **"fi"**
+      
+             if [ "$isl2" != "" ] ; then 
+                #Amazon Linux 2
+                service mariadb start 
+                chkconfig mariadb on 
+             else 
+                #Amazon Linux 1
+                service mysqld start 
+                chkconfig mysqld on
+             fi 
       
       
       
