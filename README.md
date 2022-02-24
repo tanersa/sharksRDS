@@ -237,9 +237,22 @@
                 chkconfig mysqld on
              fi 
       
+   -  Choose existing security group for your LC.
+   -  Choose your key pair for the same region.
+   -  Do not assign any public ip adress.
+   -  Hit "Create Launch Configuration" button. 
+   -  Now, we need to create Auto Scaling Group **(ASG)**. 
+   -  We need 2 ASG. One is for WebServer instance and other one is for Bastion Host instance.
+   -  We also create **Target Group**.
+   -  Then create Application Load Balancer **(ALB)**.
+   -  Add your **ALB** to your **ASG**.
+   
+   
+
+      Verify if your **Application Load Balancer** is running. 
+      Check your **Target Group** if your targets are healthy.
       
-      
-      
+      Our solution worked !
       
       
       
