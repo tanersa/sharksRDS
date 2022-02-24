@@ -49,15 +49,69 @@
 
    **_Important Note:_** Whenever we create a DB, we have to put it in **Private Subnet** because DBs are always must be private.
    
-   In order to put our DB in Private Subnet, we need to create **Subnet Group** from Private Subnets only. Whenever we spin up our DB, it picks up **Private Subnet by default.**
+   In order to put our DB in Private Subnet, we need to create **Subnet Group** from Private Subnets only. Whenever we spin up our DB, it picks up **Private Subnet    by default.**
 
    Overall, when we have managed DB, we just choose our **instance type**, our **subnet group** and **KMS key** then rest is taken care by AWS.
    
    No matter what, we need to back up our DB, so we can do that by having **Snapshot**. 
    
-   -  To create a snapshot, just go to your DB you created on AWS Console then choose your DB instance (writer or reader) and click on Actions then choose "take        snapshot" option and do the steps accordingly. You can even restore your snapshots if you go back to snapshots and choose "existing snapshot" then click on            Actions.
+   -  To create a snapshot, just go to your DB you created on AWS Console then choose your DB instance (writer or reader) and click on Actions then choose **"take        snapshot"** option and do the steps accordingly. You can even restore your snapshots if you go back to snapshots and choose **"existing snapshot"** then click    on Actions.
+
+   Let's create **Event Subscription**, so we get notification if something happens in RDS. **Event Subscription** is basically Simple Notification Service (SNS) 
+   on AWS Dashboard. You can integrate SNS with different AWS Services:
+   
+   -  **CloudWatch**
+   -  **S3**
+   -  **RDS**
+   -  **and more**
+
+   In order to create Event Subscription, you need to have two things:
+   
+   -  **SNS Topic**
+   -  **SNS Subscription**
+
+   Then, you'll get confirmation email that proves you're the legitimate person. 
+   
+   If you would like to verify your SNS, you can update anything on RDS such as "Deletion Protection" or "Encryption". Then check your email if you really get          notification regarding that update.
+   
+   **Let's build a solution for RDS:**
+   
+   -  Create your VPC
+   -  Create 6 subnets ( 2 Public, 2 Private for AppLayer, and 2 Private for DBLayer)
+   -  Create your Internet Gateway (**IGW**)   
+   -  Create your public and private Route Tables (**RTs**)
+   -  Configure your public and private RTs (Add necessary routes and do subnet association)
+   -  Create your **NAT Gateway**
+   -  Create one more RT for RDS DB Instance (Add necessary routes and do subnet association)
+      
+      Till now, we build our minimum VPC arhitecture.
+      
+   -  First, we need to create our Subnet Group because in order to create our RDS DB, we will need to choose our subnet group. 
+   -  Choose 2 Private DBlayer Subnets for this Subnet Group and create your Subnet Group.
+   -  Let's create our RDS DB cluster now but this time we will use **Public Snapshots** to create our RDS DB, not create RDS from scratch.   
+   -  Search for **"wordpress-database"** in filter.
+   -  Find "wordpress-database" snapshot related to wordpress app.
+   -  Check the checkbox for it and click on Actions drop-down then choose **Restore Snapshot**.
+   -  This time we don't create a cluster, we create DB instance. 
+   -  Choose Multi-AZ Deployment
+   -  Choose your subnet group you just created.
+   -  DB instance class: Burstable Class
+   -  Log Events: Audit Logs, General Logs, Error Logs, and Slowquery Logs.
+   -  Hit **"Restore DB instance"**
+   
+   Now, we succesfully created our RDS DB instance.
+   
+   If you would like to verify, go to your security groups and check if its created. It should give us Private IP since its private. 
+   
+   -  Create security group for your **Bastion Host**  instance.  
+   -  Create security group for your Application Load Balancer (**ALB**).  
+   -  
+
+   
+      
 
 
+   
   
    
    
