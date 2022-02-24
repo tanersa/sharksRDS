@@ -107,13 +107,109 @@
    -  Create security group for your Application Load Balancer (**ALB**).  
    -  Create WebServer Security Group
    -  Create DB instance Security Group
-   -  If you did not choose DB instance Security Group while creating your RDS then modify your security group.
+   -  If you did not choose **DB instance Security Group** while creating your RDS then modify your security group.
 
       Continue and Apply Immediately.
       
       Verify your DBs are up and running. It would take some time for that.
       
-   -  Configure Auto Scaling Group **(ASG)** and Launch Configuration **(LC)** for **Private Subnets**.    
+   -  Configure Auto Scaling Group **(ASG)** and Launch Configuration **(LC)** for **Private Subnets**.  
+
+      While configuring your **Launch Configuration**, we add our **User Data** which is **BootStrap Script**:
+      
+      
+            wordpress-userdata.sh
+            
+            #!/bin/bash -xe
+
+            yum update -y 
+
+            # Check Amazon Linux 1 or 2 
+            isl2=$(uname -a | grep amzn2)
+
+            if [ "$isl2" != "" ] ; then 
+                #Amazon Linux 2
+                amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+                yum install -y httpd mariadb-server 
+            else 
+                #Amazon Linux 1
+                yum install -y httpd24 php70 mysql56-server php70-mysqlnd
+            fi 
+
+            groupadd www
+            usermod -a -G www ec2-user 
+
+            #Download wordpress site & move to /var/www/html
+            cd /var/www 
+            curl -O https://wordpress.org/latest.tar.gz && tar -zxf latest.tar.gz 
+            rm -rf /var/www/html 
+            mv wordpress /var/www/html 
+
+            #Set the persmissions
+            chown -R root:apache /var/www 
+            chmod 2775 /var/www 
+            find /var/www -type d -exec chmod 2775 {} +
+            find /var/www -type d -exec chmod 0664 {} +
+
+            echo '<?php phpinfo(); ?>' > /var/www/html/phpinfo.php 
+            service httpd start 
+            chkconfig httpd on 
+
+            if [ "$isl2" != "" ] ; then 
+                #Amazon Linux 2
+                service mariadb start 
+                chkconfig mariadb on 
+            else 
+                #Amazon Linux 1
+                service mysqld start 
+                chkconfig mysqld on
+            fi 
+
+      
+      **Explanation of BootStrap Script:**
+      
+      We start our user data with **Bash Scripting.**
+      
+            #!/bin/bash -xe
+      
+      Then we update our packages for linux using yum module.
+      
+            yum update -y 
+      
+      Next, we create a variable using shell scripting for Linux machine.
+      
+            isl2=$(uname -a | grep amzn2)
+
+      Then, place a condition where our script will pick up the correct amazon linux php packages to install.
+
+            if [ "$isl2" != "" ] ; then 
+                #Amazon Linux 2
+                amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+                yum install -y httpd mariadb-server 
+            else 
+                #Amazon Linux 1
+                yum install -y httpd24 php70 mysql56-server php70-mysqlnd
+            fi 
+      
+      **_Note:_** Good thing about shell scripting is that you can integrate with **Python** and all **other programming languages**. Therefore, integration is 
+      so great!
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
    
       
