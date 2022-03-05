@@ -1,5 +1,6 @@
 #!/bin/bash -xe
 
+
 yum update -y 
 
 # Check Amazon Linux 1 or 2 
