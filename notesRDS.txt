@@ -1,13 +1,12 @@
 11/20/2021    RDS
 
 1) RDS -- Relational Database Services. 
-2) In general there are 3 types of Databases such are relational, non relational and 
-semi relational 
+2) In general there are 3 types of Databases such are relational, non relational and semi-relational 
 3) Relational DBs --> SQL detabases or structured.
 4) DB Cluster --> Usually for HA we build one master and multiple stand by DBs. Master 
-is a read and write DB. Stand bys are read only. In case if master DB goes down processes 
-shouldn't be interrupted. One of the stand by DB will become read/write DB (Master). And RDS will 
-spin up one more stand by read only DB. 
+  is a read and write DB. Stand bys are read only. In case if master DB goes down processes 
+  shouldn't be interrupted. One of the stand by DB will become read/write DB (Master). And RDS will 
+  spin up one more stand by read only DB. 
 5) DB instance class --> Memory optimized classes (includes r classes) and Burstable classes (includes t classes)
 6) Memory optimized classes --> Memory optimized instances accelerate performance for workloads that process large data sets in memory. 
 7) Burstable classes --> Burstable performance instances provide a baseline level of CPU performance with the ability to burst above the baseline.
