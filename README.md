@@ -1,4 +1,4 @@
-   # RDS with Wordpresss App
+   # RDS with Wordpress App
    
    **Relational Database Service (RDS)** is one of types of databases in today's IT world. RDS service is among popular service of AWS which is **managed** by AWS
    itself.
